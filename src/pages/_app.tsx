@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
+import { Header } from '../components/Molecules/Header';
 import { GlobalStyles } from '../styles/globalStyles';
 import { theme } from '../styles/theme';
 
@@ -8,6 +9,7 @@ export default ({
   pageProps,
 }: AppProps) => (
   <ThemeProvider theme={theme}>
+    <Header />
     <Component {...pageProps} />
     <GlobalStyles />
   </ThemeProvider>
