@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import searchIcon from '../../../assets/icons/search-loupe.svg';
+import searchIcon from '@assets/icons/search-loupe.svg';
 import { Container, IconContainer } from './styles';
 
 export const SearchBox = () => {

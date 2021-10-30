@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import shoppinBagIcon from '../../../assets/icons/shopping-bag.svg';
+import shoppinBagIcon from '@assets/icons/shopping-bag.svg';
 import { Container } from './styles';
 
 export const ShippingBag = () => (

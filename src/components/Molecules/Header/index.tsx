@@ -1,6 +1,6 @@
-import { Logo } from '../../Atoms/Logo';
-import { SearchBox } from '../../Atoms/SearchBox';
-import { ShippingBag } from '../../Atoms/ShippingBag';
+import { Logo } from '@atoms/Logo';
+import { SearchBox } from '@atoms/SearchBox';
+import { ShippingBag } from '@atoms/ShippingBag';
 import { StyledHeaderContainer, StyledHeaderContent } from './styles';
 
 export const Header = () => (

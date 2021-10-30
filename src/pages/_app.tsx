@@ -1,8 +1,8 @@
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
-import { Header } from '../components/Molecules/Header';
-import { GlobalStyles } from '../styles/globalStyles';
-import { theme } from '../styles/theme';
+import { theme } from '@globalStyles/theme';
+import { Header } from '@molecules/Header';
+import { GlobalStyles } from '@globalStyles/globalStyles';
 
 export default ({
   Component,
