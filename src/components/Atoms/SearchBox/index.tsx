@@ -6,13 +6,9 @@ import { Container, IconContainer } from './styles';
 export const SearchBox = () => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const onFocus = () => {
-    setIsFocused(true);
-  };
+  const onFocus = () => setIsFocused(true);
 
-  const onBlur = () => {
-    setIsFocused(false);
-  };
+  const onBlur = () => setIsFocused(false);
 
   return (
     <Container isFocused={isFocused}>
