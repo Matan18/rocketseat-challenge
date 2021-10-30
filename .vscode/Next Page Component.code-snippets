@@ -13,8 +13,10 @@
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "rfc",
     "body": [
+      "import { Container } from './styles';",
+      "",
       "export const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}} = () => {",
-      " return <div />;",
+      " return <div$2 />;",
       "};"
     ],
     "description": "Create a React component for Next Page"
