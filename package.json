@@ -8,16 +8,47 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --check",
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.tsx": [
+      "prettier --check",
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "dependencies": {
     "next": "12.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@rocketseat/commitlint-config": "^0.0.3",
     "@types/node": "16.11.6",
     "@types/react": "17.0.33",
+    "@types/styled-components": "^5.1.15",
     "eslint": "7",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-next": "12.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
     "typescript": "4.4.4"
   }
 }

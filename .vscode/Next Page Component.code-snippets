@@ -1,0 +1,34 @@
+{
+  "Next Page": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "rpc",
+    "body": [
+      "export default () => {",
+      "  return <div />;",
+      "}"
+    ],
+    "description": "Create a React component for Next Page"
+  },
+  "Next Component": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "rfc",
+    "body": [
+      "export const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}} = () => {",
+      " return <div />;",
+      "}"
+    ],
+    "description": "Create a React component for Next Page"
+  },
+  "Next Function": {
+    "scope": "javascript,typescript",
+    "prefix": "rnf",
+    "body": [
+      "import type { NextApiRequest, NextApiResponse } from 'next';",
+      "",
+      "type Data = { name: string };",
+      "",
+      "export default (req: NextApiRequest, res: NextApiResponse<Data>) => res.status(200).json({ name: 'John Doe' });"
+    ],
+    "description": "Create a Next Function"
+  },
+}
