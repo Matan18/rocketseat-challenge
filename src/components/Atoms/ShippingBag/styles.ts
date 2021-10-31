@@ -4,13 +4,14 @@ export const Container = styled.div`
   margin-left: 2.7rem;
   position: relative;
 
-  > * {
+  > *,
+  .bagCount {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  > span {
+  .bagCount {
     width: 1.7rem;
     height: 1.7rem;
     color: #FFFFFF;

@@ -4,12 +4,12 @@ import shoppinBagIcon from '@assets/icons/shopping-bag.svg';
 import { Container } from './styles';
 
 export const ShippingBag = () => (
-  <Link href="/cart" passHref>
-    <Container>
+  <Container>
+    <Link href="/cart" passHref>
       <a>
         <Image src={shoppinBagIcon} width={24} height={24} />
+        <span className="bagCount">2</span>
       </a>
-      <span>2</span>
-    </Container>
-  </Link>
+    </Link>
+  </Container>
 );
