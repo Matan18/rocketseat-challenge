@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledHeaderContainer = styled.header`
   width: 100%;
   height: 8rem;
+  padding: 2rem;
 `;
 
 export const StyledHeaderContent = styled.div`
