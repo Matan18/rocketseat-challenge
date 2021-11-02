@@ -22,6 +22,7 @@ export const ProductListHeader = () => {
       <ul>
         {tabSelectIdList.map((item) => (
           <ProductListTabFilter
+            key={item.id}
             id={item.id}
             name="tab-select"
             text={item.text}
