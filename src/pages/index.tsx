@@ -1,14 +1,14 @@
 import Head from 'next/head';
+import { Container } from '@pageStyles/home';
+import { ProductList } from '@components/Templates/ProductList';
 
 export default () => (
-  <div>
+  <Container>
     <Head>
       <title>Capputeeno</title>
       <meta name="description" content="Loja Capputeeno" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <header>
-      <h1>Hello World</h1>
-    </header>
-  </div>
+    <ProductList />
+  </Container>
 );
