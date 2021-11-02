@@ -1,10 +1,13 @@
-export interface IProduct {
-  name: string;
-  description: string;
-  image_url: string;
-  category: string;
+export type IProductItem = {
   id: string;
+  name: string;
+  image_url: string;
   price_in_cents: number;
-  created_at: string;
+}
+
+export type IProduct = IProductItem & {
   sales: number;
+  category: string;
+  created_at: string;
+  description: string;
 }

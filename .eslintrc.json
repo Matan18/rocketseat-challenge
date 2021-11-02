@@ -8,6 +8,7 @@
     "JSX": true
   },
   "rules": {
+    "no-underscore-dangle": "off",
     "camelcase": "off",
     "react/require-default-props": "off",
     "jsx-a11y/anchor-is-valid": [
