@@ -18,19 +18,47 @@ type IQueryParams<T extends number | string> = {
 
 type IProductsContextData = {
   products: IProductItem[];
-  meta: { count: number },
-  setParams: Dispatch<SetStateAction<IQueryParams<number>>>
+  meta: { count: number };
+  params: IQueryParams<number>;
+  pages: number;
+  setParams: Dispatch<SetStateAction<IQueryParams<number>>>;
+  previousPage: () => void;
+  nextPage: () => void;
 };
 
 const Context = createContext({} as IProductsContextData);
 
 export const ProductsProvider: FC = ({ children }) => {
   const { query } = useRouter();
+  const [pages, setPages] = useState(0);
   const [fetchedProductData, setFetchedProductData] = useState<IProductDataResponse>({
     products: [],
     meta: { count: 0 },
   });
   const [params, setParams] = useState<IQueryParams<number>>({ page: 1 });
+
+  const previousPage = () => {
+    setParams((prev) => {
+      if (!prev.page) return { ...prev, page: 1 };
+
+      return (prev.page < 1 ? prev : {
+        ...prev,
+        page: prev.page - 1,
+      });
+    });
+  };
+
+  const nextPage = () => {
+    setParams((prev) => {
+      if (!prev.page) return { ...prev, page: 2 };
+      return (prev.page === pages) ? prev : (
+        {
+          ...prev,
+          page: prev.page + 1,
+        }
+      );
+    });
+  };
 
   useEffect(() => {
     const { page, category } = query as IQueryParams<string>;
@@ -61,11 +89,22 @@ export const ProductsProvider: FC = ({ children }) => {
         category,
         page,
       },
-    }).then((response) => setFetchedProductData(response.data));
+    }).then((response) => {
+      setFetchedProductData(response.data);
+      setPages(Math.ceil(response.data.meta.count / 12));
+    });
   }, [params]);
 
   return (
-    <Context.Provider value={{ ...fetchedProductData, setParams }}>
+    <Context.Provider value={{
+      ...fetchedProductData,
+      setParams,
+      params,
+      previousPage,
+      nextPage,
+      pages,
+    }}
+    >
       {children}
     </Context.Provider>
   );
