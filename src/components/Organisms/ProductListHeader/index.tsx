@@ -1,3 +1,4 @@
+import { OrderMenu } from '@components/Atoms/OrderMenu';
 import { ProductListTabFilter, ProductListType } from '@components/Atoms/ProductListTabFilter';
 import { useState } from 'react';
 import { Container } from './styles';
@@ -29,6 +30,7 @@ export const ProductListHeader = () => {
           />
         ))}
       </ul>
+      <OrderMenu />
     </Container>
   );
 };

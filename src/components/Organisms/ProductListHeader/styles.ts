@@ -7,12 +7,18 @@ export const Container = styled.header`
 
   font-size: 1rem;
 
-  ul {
+  > ul {
     display: flex;
     align-items: center;
 
     li + li {
       margin-left: 4em;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    > ul li + li {
+      margin-left: 1.5em;
     }
   }
 `;
