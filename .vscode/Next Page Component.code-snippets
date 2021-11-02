@@ -21,6 +21,33 @@
     ],
     "description": "Create a React component for Next Page"
   },
+  "Next Hook": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "rhc",
+    "body": [
+      "import { useContext, createContext, FC } from 'react';",
+      "",
+      "type ContextType$2 = {};",
+      "",
+      "const Context = createContext({} as ContextType$2);",
+      "",
+      "export const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}Provider}: FC = ({ children }) => {",
+      "  return (",
+      "    <Context.Provider value={{}}>",
+      "     {children}",
+      "    </Context.Provider>",
+      "  );",
+      "};",
+      "",
+      "export const ${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/} = (): ContextType$2 => {",
+      "  const context = useContext(Context);",
+      "  if (!context) throw new Error('You must use this function inside a React Function Component');",
+      "  return context;",
+      "};",
+      ""
+    ],
+    "description": "Create a React hook component"
+  },
   "Next Function": {
     "scope": "javascript,typescript",
     "prefix": "rnf",
