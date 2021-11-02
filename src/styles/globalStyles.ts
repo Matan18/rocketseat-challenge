@@ -24,4 +24,8 @@ a {
 ul {
   list-style: none;
 }
+
+*:focus {
+  outline-color: #737380;
+}
 `;
