@@ -4,6 +4,6 @@ import {
 } from '@apollo/client';
 
 export const client = new ApolloClient({
-  uri: 'http://localhost:3333',
+  uri: process.env.NEXT_PUBLIC_API_URL,
   cache: new InMemoryCache(),
 });

@@ -1,11 +1,11 @@
-import { IProduct } from '@types';
+import { IProductItem } from '@types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { convertCurrency } from 'utils/currencyConversor';
 import { Container } from './styles';
 
 type Props = {
-  product: IProduct;
+  product: IProductItem;
 }
 
 export const ProductItem = ({ product }: Props) => (

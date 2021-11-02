@@ -13,6 +13,8 @@ export const Container = styled.section`
     flex-wrap: wrap;
     justify-content: space-between;
 
+    margin: 3.2rem 0 7.4rem;
+
     row-gap: 2.2rem;
     column-gap: 3.2rem;
   }
