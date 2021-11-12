@@ -1,4 +1,4 @@
-import { ProductItem } from '@components/Atoms/ProductItem';
+import { ProductItem } from '@components/Molecules/ProductItem';
 
 import { PageNavigators } from '@components/Molecules/PageNavigators';
 import { useProducts } from '@hooks/useProducts';

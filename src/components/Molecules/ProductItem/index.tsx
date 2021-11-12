@@ -1,7 +1,7 @@
 import { IProductItem } from '@types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ProductPrice } from '../ProductPrice';
+import { ProductPrice } from '../../Atoms/ProductPrice';
 import { Container } from './styles';
 
 type Props = {
