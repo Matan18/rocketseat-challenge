@@ -1,7 +1,7 @@
 import { IProductItem } from '@types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { convertCurrency } from 'utils/currencyConversor';
+import { ProductPrice } from '../ProductPrice';
 import { Container } from './styles';
 
 type Props = {
@@ -21,7 +21,7 @@ export const ProductItem = ({ product }: Props) => (
       <div>
         <p>{product.name}</p>
         <hr />
-        <b>{convertCurrency(product.price_in_cents)}</b>
+        <ProductPrice price={product.price_in_cents} />
       </div>
     </Container>
   </Link>

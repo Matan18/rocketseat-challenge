@@ -31,7 +31,7 @@
       "",
       "const Context = createContext({} as ContextType$2);",
       "",
-      "export const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}Provider}: FC = ({ children }) => {",
+      "export const ${1:${TM_DIRECTORY/(.+)(use)(.+)$/$3/}Provider}: FC = ({ children }) => {",
       "  return (",
       "    <Context.Provider value={{}}>",
       "     {children}",
