@@ -16,7 +16,6 @@ export const Container = styled.section`
     margin: 3.2rem 0 7.4rem;
 
     row-gap: 2.2rem;
-    column-gap: 3.2rem;
   }
 
   @media screen and (max-width: 830px){
