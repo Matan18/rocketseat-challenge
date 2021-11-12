@@ -1,6 +1,6 @@
-import { OrderMenu } from '@components/Atoms/OrderMenu';
+import { OrderMenu } from '@components/Molecules/OrderMenu';
 import { ProductListTabFilter, ProductListType } from '@components/Atoms/ProductListTabFilter';
-import { useState } from 'react';
+import { useProducts } from '@hooks/useProducts';
 import { Container } from './styles';
 
 type TabSelectItem = {
@@ -9,12 +9,11 @@ type TabSelectItem = {
 }
 
 export const ProductListHeader = () => {
-  const [selected, setSelected] = useState<ProductListType>('all');
-
+  const { selectedCategory, setSelectedCategory } = useProducts();
   const tabSelectIdList: TabSelectItem[] = [
     { id: 'all', text: 'todos os produtos' },
-    { id: 'shirt', text: 'camisetas' },
-    { id: 'cup', text: 'camisetas' },
+    { id: 't-shirts', text: 'camisetas' },
+    { id: 'mugs', text: 'camisetas' },
   ];
 
   return (
@@ -26,8 +25,8 @@ export const ProductListHeader = () => {
             id={item.id}
             name="tab-select"
             text={item.text}
-            checked={item.id === selected}
-            onChange={setSelected}
+            checked={item.id === selectedCategory}
+            onChange={setSelectedCategory}
           />
         ))}
       </ul>

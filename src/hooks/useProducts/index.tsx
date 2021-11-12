@@ -5,6 +5,7 @@ import {
 import { useRouter } from 'next/dist/client/router';
 import { client } from '@services/api';
 import { gql } from '@apollo/client';
+import { ProductListType } from '@components/Atoms/ProductListTabFilter';
 
 type IProductDataResponse = {
   products: IProductItem[],
@@ -24,12 +25,15 @@ type IProductsContextData = {
   setParams: Dispatch<SetStateAction<IQueryParams<number>>>;
   previousPage: () => void;
   nextPage: () => void;
+  selectedCategory: ProductListType;
+  setSelectedCategory: Dispatch<SetStateAction<ProductListType>>;
 };
 
 const Context = createContext({} as IProductsContextData);
 
 export const ProductsProvider: FC = ({ children }) => {
   const { query } = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState<ProductListType>('all');
   const [pages, setPages] = useState(0);
   const [fetchedProductData, setFetchedProductData] = useState<IProductDataResponse>({
     products: [],
@@ -64,9 +68,18 @@ export const ProductsProvider: FC = ({ children }) => {
     const { page, category } = query as IQueryParams<string>;
     setParams((prev) => ({
       page: Number.isNaN(Number(page)) ? prev.page : Number(page),
-      category,
+      category: ['mugs', 't-shirts'].includes(`${category}`) ? category : undefined,
     }));
   }, [query]);
+
+  useEffect(() => {
+    setParams({
+      page: 1,
+      category: ['mugs', 't-shirts'].includes(`${selectedCategory}`)
+        ? selectedCategory as 'mugs' | 't-shirts'
+        : undefined,
+    });
+  }, [selectedCategory]);
 
   useEffect(() => {
     const { page, category } = params;
@@ -93,13 +106,15 @@ export const ProductsProvider: FC = ({ children }) => {
       setFetchedProductData(response.data);
       setPages(Math.ceil(response.data.meta.count / 12));
     });
-  }, [params]);
+  }, [params, selectedCategory]);
 
   return (
     <Context.Provider value={{
       ...fetchedProductData,
       setParams,
       params,
+      setSelectedCategory,
+      selectedCategory,
       previousPage,
       nextPage,
       pages,

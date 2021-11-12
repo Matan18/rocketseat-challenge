@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { Container } from './styles';
 
-export type ProductListType = 'all' | 'shirt' | 'cup';
+export type ProductListType = 't-shirts' | 'mugs' | 'all';
 
 // eslint-disable-next-line no-unused-vars
 type ChangeTypeFunction = (value: ProductListType) => void;
@@ -21,10 +20,6 @@ export const ProductListTabFilter = ({
   checked,
   onChange,
 }: Props) => {
-  useEffect(() => {
-    onChange(id);
-  }, [id, onChange]);
-
   const handleChange = () => {
     onChange(id);
   };
