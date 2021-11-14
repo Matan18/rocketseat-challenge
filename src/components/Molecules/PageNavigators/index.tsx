@@ -23,7 +23,7 @@ export const PageNavigators = () => {
   return (
     <Container>
       {Array
-        .from({ length: pages }, (_, i) => i)
+        .from({ length: pages - 1 }, (_, i) => i)
         .map((item) => (
           <PageButton
             key={item}
