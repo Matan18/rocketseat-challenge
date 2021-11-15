@@ -13,7 +13,7 @@ export const ProductListHeader = () => {
   const tabSelectIdList: TabSelectItem[] = [
     { id: 'all', text: 'todos os produtos' },
     { id: 't-shirts', text: 'camisetas' },
-    { id: 'mugs', text: 'camisetas' },
+    { id: 'mugs', text: 'canecas' },
   ];
 
   return (
