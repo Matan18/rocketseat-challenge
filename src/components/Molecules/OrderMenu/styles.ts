@@ -9,7 +9,7 @@ export const Container = styled.section<Props>`
   font-size: 1rem;
   position: relative;
 
-  label {
+  > label {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -25,10 +25,10 @@ export const Container = styled.section<Props>`
     input {
       display: none;
     }
-  }
 
-  img {
-    transform: rotate(${(props) => (props.isOpen ? 180 : 0)}deg);
+    img {
+      transform: rotate(${(props) => (props.isOpen ? 180 : 0)}deg);
+    }
   }
 
   small {
@@ -42,12 +42,13 @@ export const Container = styled.section<Props>`
 
     padding: 1.2em 0;
     width: 100%;
-    height: 13.3em;
+    height: 13.2em;
     background: #FFFFFF;
 
     display: ${(props) => (props.isOpen ? 'flex' : 'none')};
     flex-direction: column;
     align-items: stretch;
+    font-size: inherit;
 
     border-radius: .4em;
 
@@ -56,26 +57,6 @@ export const Container = styled.section<Props>`
 
       + li {
         margin-top: 4px;
-      }
-
-      button {
-        font-size: inherit;
-        width: 100%;
-        padding: 0 1.6rem;
-
-        display: flex;
-        justify-content: flex-start;
-
-        border: none;
-        background: none;
-
-        &:hover {
-          background: #73738011;
-        }
-
-        &:active {
-          background: #73738001;
-        }
       }
     }
   }

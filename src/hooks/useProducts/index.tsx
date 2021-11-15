@@ -1,4 +1,6 @@
-import { IProductItem } from '@types';
+import {
+  IMenuKey, IProductItem, ISortField, ISortOrder, ISortOrderType,
+} from '@types';
 import {
   useContext, createContext, FC, useState, useEffect, Dispatch, SetStateAction,
 } from 'react';
@@ -7,14 +9,41 @@ import { client } from '@services/api';
 import { gql } from '@apollo/client';
 import { ProductListType } from '@components/Atoms/ProductListTabFilter';
 
+const sortType: ISortOrder = {
+  news: {
+    field: 'created_at',
+    order: 'dsc',
+  },
+  higher: {
+    field: 'price_in_cents',
+    order: 'dsc',
+  },
+  lower: {
+    field: 'price_in_cents',
+    order: 'asc',
+  },
+  sellest: {
+    field: 'sales',
+    order: 'dsc',
+  },
+};
+
 type IProductDataResponse = {
   products: IProductItem[],
   meta: { count: number }
 };
 
-type IQueryParams<T extends number | string> = {
+type IQueryParams<T extends string | number> = {
   page?: T;
   category?: 'mugs' | 't-shirts';
+  order?: IMenuKey;
+};
+
+type IGraphQuery = {
+  page?: number;
+  category?: 'mugs' | 't-shirts';
+  order?: ISortOrderType;
+  field?: ISortField;
 };
 
 type IProductsContextData = {
@@ -27,6 +56,8 @@ type IProductsContextData = {
   nextPage: () => void;
   selectedCategory: ProductListType;
   setSelectedCategory: Dispatch<SetStateAction<ProductListType>>;
+  selectedOrder?: IMenuKey;
+  setSelectedOrder: Dispatch<SetStateAction<IMenuKey | undefined>>;
 };
 
 const Context = createContext({} as IProductsContextData);
@@ -34,6 +65,7 @@ const Context = createContext({} as IProductsContextData);
 export const ProductsProvider: FC = ({ children }) => {
   const { query } = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<ProductListType>('all');
+  const [selectedOrder, setSelectedOrder] = useState<IMenuKey | undefined>();
   const [pages, setPages] = useState(0);
   const [fetchedProductData, setFetchedProductData] = useState<IProductDataResponse>({
     products: [],
@@ -64,12 +96,16 @@ export const ProductsProvider: FC = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    const { page, category } = query as IQueryParams<string>;
+  function paramsFromQueryUrl({ page, category }: IQueryParams<string>) {
     setParams((prev) => ({
       page: Number.isNaN(Number(page)) ? prev.page : Number(page),
       category: ['mugs', 't-shirts'].includes(`${category}`) ? category : undefined,
     }));
+  }
+
+  useEffect(() => {
+    const { page, category } = query as IQueryParams<string>;
+    paramsFromQueryUrl({ page, category });
   }, [query]);
 
   useEffect(() => {
@@ -82,12 +118,22 @@ export const ProductsProvider: FC = ({ children }) => {
   }, [selectedCategory]);
 
   useEffect(() => {
-    const { page, category } = params;
+    setParams((prev) => ({ ...prev, order: selectedOrder }));
+  }, [selectedOrder]);
 
-    client.query<IProductDataResponse, IQueryParams<number>>({
+  useEffect(() => {
+    const { page, category, order } = params;
+
+    const data: IGraphQuery = { page, category };
+    if (order) {
+      data.order = sortType[order].order;
+      data.field = sortType[order].field;
+    }
+
+    client.query<IProductDataResponse, IGraphQuery>({
       query: gql`
-      query GetAllProduct($page: Int! = 1, $category: String) {
-        products: allProducts(page: $page, perPage: 12, filter: {category: $category}) {
+      query GetAllProduct($page: Int! = 1, $category: String, $field: String, $order: String) {
+        products: allProducts(page: $page, perPage: 12, sortField: $field, sortOrder: $order, filter: {category: $category}) {
           id
           name
           image_url
@@ -98,10 +144,7 @@ export const ProductsProvider: FC = ({ children }) => {
         }
       }
     `,
-      variables: {
-        category,
-        page,
-      },
+      variables: data,
     }).then((response) => {
       setFetchedProductData(response.data);
       setPages(Math.ceil(response.data.meta.count / 12));
@@ -113,6 +156,8 @@ export const ProductsProvider: FC = ({ children }) => {
       ...fetchedProductData,
       setParams,
       params,
+      selectedOrder,
+      setSelectedOrder,
       setSelectedCategory,
       selectedCategory,
       previousPage,
