@@ -37,6 +37,7 @@ type IQueryParams<T extends string | number> = {
   page?: T;
   category?: 'mugs' | 't-shirts';
   order?: IMenuKey;
+  name?: string;
 };
 
 type IGraphQuery = {
@@ -44,6 +45,7 @@ type IGraphQuery = {
   category?: 'mugs' | 't-shirts';
   order?: ISortOrderType;
   field?: ISortField;
+  name?: string;
 };
 
 type IProductsContextData = {
@@ -58,6 +60,8 @@ type IProductsContextData = {
   setSelectedCategory: Dispatch<SetStateAction<ProductListType>>;
   selectedOrder?: IMenuKey;
   setSelectedOrder: Dispatch<SetStateAction<IMenuKey | undefined>>;
+  productName: string;
+  setProductName: Dispatch<SetStateAction<string>>;
 };
 
 const Context = createContext({} as IProductsContextData);
@@ -65,6 +69,7 @@ const Context = createContext({} as IProductsContextData);
 export const ProductsProvider: FC = ({ children }) => {
   const { query } = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<ProductListType>('all');
+  const [productName, setProductName] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<IMenuKey | undefined>();
   const [pages, setPages] = useState(0);
   const [fetchedProductData, setFetchedProductData] = useState<IProductDataResponse>({
@@ -120,13 +125,19 @@ export const ProductsProvider: FC = ({ children }) => {
   }, [selectedCategory]);
 
   useEffect(() => {
+    setParams((prev) => ({ ...prev, name: productName }));
+  }, [productName]);
+
+  useEffect(() => {
     setParams((prev) => ({ ...prev, order: selectedOrder }));
   }, [selectedOrder]);
 
   useEffect(() => {
-    const { page, category, order } = params;
+    const {
+      page, category, name, order,
+    } = params;
 
-    const data: IGraphQuery = { page, category };
+    const data: IGraphQuery = { page, category, name };
     if (order) {
       data.order = sortType[order].order;
       data.field = sortType[order].field;
@@ -134,8 +145,8 @@ export const ProductsProvider: FC = ({ children }) => {
 
     client.query<IProductDataResponse, IGraphQuery>({
       query: gql`
-      query GetAllProduct($page: Int! = 1, $category: String, $field: String, $order: String) {
-        products: allProducts(page: $page, perPage: 12, sortField: $field, sortOrder: $order, filter: {category: $category}) {
+      query GetAllProduct($page: Int! = 1, $category: String, $field: String, $order: String, $name: String) {
+        products: allProducts(page: $page, perPage: 12, sortField: $field, sortOrder: $order, filter: { category: $category, q: $name }) {
           id
           name
           image_url
@@ -158,6 +169,8 @@ export const ProductsProvider: FC = ({ children }) => {
       ...fetchedProductData,
       setParams,
       params,
+      productName,
+      setProductName,
       selectedOrder,
       setSelectedOrder,
       setSelectedCategory,
