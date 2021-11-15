@@ -98,6 +98,7 @@ export const ProductsProvider: FC = ({ children }) => {
 
   function paramsFromQueryUrl({ page, category }: IQueryParams<string>) {
     setParams((prev) => ({
+      ...prev,
       page: Number.isNaN(Number(page)) ? prev.page : Number(page),
       category: ['mugs', 't-shirts'].includes(`${category}`) ? category : undefined,
     }));
@@ -109,12 +110,13 @@ export const ProductsProvider: FC = ({ children }) => {
   }, [query]);
 
   useEffect(() => {
-    setParams({
+    setParams((prev) => ({
+      ...prev,
       page: 1,
       category: ['mugs', 't-shirts'].includes(`${selectedCategory}`)
         ? selectedCategory as 'mugs' | 't-shirts'
         : undefined,
-    });
+    }));
   }, [selectedCategory]);
 
   useEffect(() => {
