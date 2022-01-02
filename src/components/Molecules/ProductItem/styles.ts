@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.li`
+export const Container = styled.a`
   width: 100%;
   max-width: 256px;
   background: rgba(255, 255, 255, 0.4);
